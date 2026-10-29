@@ -1,0 +1,803 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adarsh Chahar | Visual Storyteller & BCA Student</title>
+  
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    /* CSS Reset & Design Tokens */
+    :root {
+      --bg-dark: #0a0c10;
+      --card-bg: #12161f;
+      --card-border: #1f2735;
+      --accent: #3b82f6;
+      --accent-glow: rgba(59, 130, 246, 0.35);
+      --accent-amber: #f59e0b;
+      --text-primary: #f3f4f6;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-primary);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Ambient Background Glow */
+    .ambient-glow {
+      position: fixed;
+      width: 450px;
+      height: 450px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, rgba(0, 0, 0, 0) 70%);
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(50px);
+    }
+    .glow-1 { top: -100px; left: -100px; }
+    .glow-2 { bottom: 10%; right: -100px; }
+
+    /* Navigation Bar */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10, 12, 16, 0.85);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    nav a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    nav a:hover {
+      color: var(--text-primary);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text-primary);
+      font-size: 1.4rem;
+      cursor: pointer;
+    }
+
+    /* Common Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.1rem;
+      margin-bottom: 0.6rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .section-desc {
+      color: var(--text-secondary);
+      margin-bottom: 2.8rem;
+      max-width: 600px;
+      font-size: 1.05rem;
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: calc(85vh - 70px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 2rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.25);
+      color: #60a5fa;
+      padding: 0.4rem 1rem;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    .badge .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: #60a5fa;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(96, 165, 250, 0.7); }
+      70% { box-shadow: 0 0 0 8px rgba(96, 165, 250, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(96, 165, 250, 0); }
+    }
+
+    .hero-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 3.8rem;
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 1.35rem;
+      color: #93c5fd;
+      font-weight: 600;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero-tagline {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      max-width: 650px;
+      margin-bottom: 2rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.8rem 1.6rem;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 4px 20px var(--accent-glow);
+    }
+
+    .btn-primary:hover {
+      background: #2563eb;
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text-primary);
+      border: 1px solid var(--card-border);
+    }
+
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: #334155;
+      transform: translateY(-2px);
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1.2rem;
+    }
+
+    .social-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-size: 1.15rem;
+      transition: var(--transition);
+    }
+
+    .social-icon:hover {
+      color: var(--text-primary);
+      border-color: var(--accent);
+      background: rgba(59, 130, 246, 0.1);
+      transform: translateY(-3px);
+    }
+
+    /* Video Section */
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.8rem;
+    }
+
+    .video-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .video-card:hover {
+      border-color: #3b82f6;
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .video-container {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%; /* 16:9 Aspect Ratio */
+      background: #000;
+    }
+
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .video-info {
+      padding: 1.3rem;
+      flex-grow: 1;
+    }
+
+    .video-tag {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: #60a5fa;
+      margin-bottom: 0.4rem;
+      display: inline-block;
+    }
+
+    .video-title {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+
+    .video-desc {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    /* Photography Gallery */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .gallery-item {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      aspect-ratio: 4/5;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      cursor: pointer;
+    }
+
+    .gallery-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .gallery-item:hover .gallery-img {
+      transform: scale(1.06);
+    }
+
+    .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(10, 12, 16, 0.9) 0%, rgba(10, 12, 16, 0.1) 60%, transparent 100%);
+      opacity: 0;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.5rem;
+    }
+
+    .gallery-item:hover .gallery-overlay {
+      opacity: 1;
+    }
+
+    .photo-tag {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 1px;
+    }
+
+    .photo-title {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    /* About & Contact Section */
+    .about-contact-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 2.5rem;
+    }
+
+    .about-card, .contact-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 2.2rem;
+    }
+
+    .about-card p {
+      color: var(--text-secondary);
+      margin-bottom: 1.2rem;
+      font-size: 1rem;
+    }
+
+    .skills-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 1.5rem;
+    }
+
+    .skill-pill {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--card-border);
+      padding: 0.35rem 0.85rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.1rem;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      margin-bottom: 1rem;
+      text-decoration: none;
+      color: var(--text-primary);
+      transition: var(--transition);
+    }
+
+    .contact-item:hover {
+      border-color: var(--accent);
+      background: rgba(59, 130, 246, 0.08);
+      transform: translateX(4px);
+    }
+
+    .contact-icon-box {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: rgba(59, 130, 246, 0.15);
+      color: #60a5fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .contact-text h4 {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .contact-text p {
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--card-border);
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* Responsive Queries */
+    @media (max-width: 868px) {
+      .hero-name {
+        font-size: 2.8rem;
+      }
+      .about-contact-grid {
+        grid-template-columns: 1fr;
+      }
+      nav ul {
+        display: none;
+      }
+      nav.active ul {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--bg-dark);
+        border-bottom: 1px solid var(--card-border);
+        padding: 1.5rem;
+        gap: 1rem;
+      }
+      .mobile-menu-btn {
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient Glow Backgrounds -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+
+  <!-- Navigation Bar -->
+  <header>
+    <div class="nav-container">
+      <a href="#" class="logo">
+        <i class="fa-solid fa-camera-retro"></i>
+        <span>Adarsh</span> Chahar
+      </a>
+      <button class="mobile-menu-btn" id="menuToggle" aria-label="Toggle navigation">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <nav id="navMenu">
+        <ul>
+          <li><a href="#vlogs">Vlogs & Edits</a></li>
+          <li><a href="#gallery">Photography</a></li>
+          <li><a href="#about">About & Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="container hero">
+    <div class="badge">
+      <span class="dot"></span> Open for Creative Projects & Freelancing
+    </div>
+    <h1 class="hero-name">Adarsh Chahar</h1>
+    <h2 class="hero-subtitle">Visual Storyteller & BCA Student</h2>
+    <p class="hero-tagline">
+      Capturing cinematic moments through the lens, producing narrative vlogs, and building creative web experiences through code.
+    </p>
+    
+    <div class="hero-actions">
+      <a href="#vlogs" class="btn btn-primary">
+        <i class="fa-solid fa-play"></i> Watch My Work
+      </a>
+      <a href="#about" class="btn btn-outline">
+        <i class="fa-regular fa-envelope"></i> Get In Touch
+      </a>
+    </div>
+
+    <!-- Quick Social Links (Replace # with your profile links) -->
+    <div class="social-links">
+      <a href="https://youtube.com" target="_blank" class="social-icon" title="YouTube Channel">
+        <i class="fa-brands fa-youtube"></i>
+      </a>
+      <a href="https://linkedin.com" target="_blank" class="social-icon" title="LinkedIn Profile">
+        <i class="fa-brands fa-linkedin-in"></i>
+      </a>
+      <a href="https://github.com" target="_blank" class="social-icon" title="GitHub Profile">
+        <i class="fa-brands fa-github"></i>
+      </a>
+      <a href="https://instagram.com" target="_blank" class="social-icon" title="Instagram">
+        <i class="fa-brands fa-instagram"></i>
+      </a>
+    </div>
+  </section>
+
+  <!-- YouTube / Vlogs Section -->
+  <section id="vlogs" class="container">
+    <h2 class="section-title"><i class="fa-solid fa-film" style="color: var(--accent); margin-right: 8px;"></i> Vlogs & Video Edits</h2>
+    <p class="section-desc">Cinematic perspectives, daily stories, and editing experiments published on my YouTube channel.</p>
+
+    <div class="video-grid">
+      <!-- Video 1 -->
+      <div class="video-card">
+        <div class="video-container">
+          <!-- Tip: Replace 'dQw4w9WgXcQ' with your own YouTube video ID -->
+          <iframe 
+            src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ" 
+            title="Cinematic Reel / Vlog 1" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+          </iframe>
+        </div>
+        <div class="video-info">
+          <span class="video-tag">Vlog / Travel</span>
+          <h3 class="video-title">A Day Through My Lens</h3>
+          <p class="video-desc">Exploring street life, capturing natural light, and storytelling with fast-paced rhythmic editing.</p>
+        </div>
+      </div>
+
+      <!-- Video 2 -->
+      <div class="video-card">
+        <div class="video-container">
+          <iframe 
+            src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ" 
+            title="Cinematic Reel / Vlog 2" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+          </iframe>
+        </div>
+        <div class="video-info">
+          <span class="video-tag">Cinematic B-Roll</span>
+          <h3 class="video-title">Urban Shadows & Colors</h3>
+          <p class="video-desc">Color grading experiment with teal-orange tones and low-light handheld sequence shots.</p>
+        </div>
+      </div>
+
+      <!-- Video 3 -->
+      <div class="video-card">
+        <div class="video-container">
+          <iframe 
+            src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ" 
+            title="Cinematic Reel / Vlog 3" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+          </iframe>
+        </div>
+        <div class="video-info">
+          <span class="video-tag">Tech & Creative Vlog</span>
+          <h3 class="video-title">Creator & Student Routine</h3>
+          <p class="video-desc">Balancing college, coding basics, and shooting visual content on weekends.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Photography Gallery Section -->
+  <section id="gallery" class="container">
+    <h2 class="section-title"><i class="fa-solid fa-camera" style="color: var(--accent); margin-right: 8px;"></i> Photography Gallery</h2>
+    <p class="section-desc">Selected frames featuring portraits, urban architectures, and golden hour captures.</p>
+
+    <div class="gallery-grid">
+      <!-- Photo 1: Cinematic Portrait -->
+      <div class="gallery-item">
+        <img class="gallery-img" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop" alt="Moody Portrait">
+        <div class="gallery-overlay">
+          <span class="photo-tag">Portrait</span>
+          <h3 class="photo-title">Golden Hour Gaze</h3>
+        </div>
+      </div>
+
+      <!-- Photo 2: Street & Urban -->
+      <div class="gallery-item">
+        <img class="gallery-img" src="https://images.unsplash.com/photo-1509114397022-ed747cca3f65?q=80&w=800&auto=format&fit=crop" alt="Neon Street">
+        <div class="gallery-overlay">
+          <span class="photo-tag">Street</span>
+          <h3 class="photo-title">Neon Nightscapes</h3>
+        </div>
+      </div>
+
+      <!-- Photo 3: Architecture / Lines -->
+      <div class="gallery-item">
+        <img class="gallery-img" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800&auto=format&fit=crop" alt="Modern Architecture">
+        <div class="gallery-overlay">
+          <span class="photo-tag">Architecture</span>
+          <h3 class="photo-title">Minimalist Geometry</h3>
+        </div>
+      </div>
+
+      <!-- Photo 4: Nature / Travel -->
+      <div class="gallery-item">
+        <img class="gallery-img" src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=800&auto=format&fit=crop" alt="Misty Nature">
+        <div class="gallery-overlay">
+          <span class="photo-tag">Nature</span>
+          <h3 class="photo-title">Morning Mist</h3>
+        </div>
+      </div>
+
+      <!-- Photo 5: Moody Cinematic -->
+      <div class="gallery-item">
+        <img class="gallery-img" src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=800&auto=format&fit=crop" alt="Cinematic Car Shot">
+        <div class="gallery-overlay">
+          <span class="photo-tag">Cinematic</span>
+          <h3 class="photo-title">Midnight Motion</h3>
+        </div>
+      </div>
+
+      <!-- Photo 6: Silhouette / Abstract -->
+      <div class="gallery-item">
+        <img class="gallery-img" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800&auto=format&fit=crop" alt="Sunset Landscape">
+        <div class="gallery-overlay">
+          <span class="photo-tag">Landscape</span>
+          <h3 class="photo-title">Horizon Sunset</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Me & Contact Section -->
+  <section id="about" class="container">
+    <div class="about-contact-grid">
+      
+      <!-- About Card -->
+      <div class="about-card">
+        <h2 class="section-title">About Me</h2>
+        <p>
+          I am a 2nd-year BCA student passionate about visual storytelling. Whether it's editing high-energy vlogs, color-grading raw video footage, or framing evocative photographs, I let my creative work communicate for me.
+        </p>
+        <p>
+          Alongside media production, I enjoy learning modern web development and automating creative workflows with code.
+        </p>
+
+        <h3 style="font-size: 1rem; margin-top: 1.5rem; color: #fff;">Skillset & Toolkit</h3>
+        <div class="skills-pills">
+          <span class="skill-pill"><i class="fa-solid fa-video"></i> Video Editing</span>
+          <span class="skill-pill"><i class="fa-solid fa-camera"></i> Photography</span>
+          <span class="skill-pill"><i class="fa-solid fa-palette"></i> Color Grading</span>
+          <span class="skill-pill"><i class="fa-brands fa-youtube"></i> Vlogging</span>
+          <span class="skill-pill"><i class="fa-brands fa-html5"></i> HTML5 / CSS</span>
+          <span class="skill-pill"><i class="fa-solid fa-code"></i> Basic Programming</span>
+        </div>
+      </div>
+
+      <!-- Contact Card -->
+      <div class="contact-card">
+        <h2 class="section-title">Let's Connect</h2>
+        <p class="section-desc" style="margin-bottom: 1.5rem;">
+          Have a project in mind, need video editing, or want to collaborate? Feel free to reach out directly.
+        </p>
+
+        <!-- Direct Email Link -->
+        <a href="mailto:your-email@example.com" class="contact-item">
+          <div class="contact-icon-box">
+            <i class="fa-regular fa-envelope"></i>
+          </div>
+          <div class="contact-text">
+            <h4>Email Me</h4>
+            <p>adarsh.contact@gmail.com</p>
+          </div>
+        </a>
+
+        <!-- Instagram Profile Link -->
+        <a href="https://instagram.com" target="_blank" class="contact-item">
+          <div class="contact-icon-box">
+            <i class="fa-brands fa-instagram"></i>
+          </div>
+          <div class="contact-text">
+            <h4>Instagram DMs</h4>
+            <p>@your_instagram_handle</p>
+          </div>
+        </a>
+
+        <!-- LinkedIn Profile Link -->
+        <a href="https://linkedin.com" target="_blank" class="contact-item">
+          <div class="contact-icon-box">
+            <i class="fa-brands fa-linkedin-in"></i>
+          </div>
+          <div class="contact-text">
+            <h4>LinkedIn</h4>
+            <p>Connect with Adarsh</p>
+          </div>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Minimal Footer -->
+  <footer>
+    <p>&copy; 2026 Adarsh Chahar. Built with code & visual passion.</p>
+  </footer>
+
+  <!-- Basic Mobile Menu Toggle Script -->
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
+
+    menuToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+    });
+
+    // Close menu when clicking on a link
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('active');
+      });
+    });
+  </script>
+</body>
+</html>
+```
